@@ -1,3 +1,5 @@
+alias ls 'ls -a'
+
 alias vim 'nvim'
 
 alias tmux 'tmux -u'

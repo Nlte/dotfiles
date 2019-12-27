@@ -1,3 +1,6 @@
+# ENV
+set -gx LANG en_US.utf-8
+
 # gcc-arm toolchain
 set -g fish_user_paths $HOME/opt/gcc-arm-none-eabi-7-2018-q2-update/bin $fish_user_paths
 
