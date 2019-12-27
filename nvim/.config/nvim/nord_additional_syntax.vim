@@ -6,6 +6,7 @@ let s:nord1 = "#3B4252"
 let s:nord2 = "#434C5E"
 let s:nord3 = "#4C566A"
 let s:nord3_bright = "#616E88"
+let s:nord3_brightest = "#7B88A1"
 let s:nord4 = "#D8DEE9"
 let s:nord5 = "#E5E9F0"
 let s:nord6 = "#ECEFF4"
@@ -22,17 +23,21 @@ let s:nord15 = "#B48EAD"
 function! CustomHighlight() abort
 
     " """"""""""""""""""""
+    " general
+    " """"""""""""""""""""
+
+    " """"""""""""""""""""
     " python
     " """"""""""""""""""""
-    highlight pythonClassVar ctermfg=red guifg=#BF616A
-    highlight pythonStatement ctermfg=blue guifg=#4C566A
-    highlight pythonStrFormatting ctermfg=yellow guifg=#EBCB8B
+    highlight pythonClassVar ctermfg=red guifg=s:nord11
+    highlight pythonStatement ctermfg=blue guifg=s:nord3
+    highlight pythonStrFormatting ctermfg=yellow guifg=s:nord13
 
     " """"""""""""""""""""
     " C++
     " """"""""""""""""""""
-    highlight cppSTLconstant ctermfg=lightcyan guifg=#88C0D0
-    highlight cppStructure ctermfg=blue guifg=#4C566A
+    highlight cppSTLconstant ctermfg=lightcyan guifg=s:nord8
+    highlight cppStructure ctermfg=blue guifg=s:nord3
     highlight cppAccess ctermfg=magenta guifg=s:nord15
     highlight cIncluded ctermfg=green guifg=s:nord14
 

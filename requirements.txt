@@ -3,3 +3,6 @@ pip3
 fish
 tmux
 nvim
+reattach-to-user-namespace
+urlview
+fpp

@@ -1,4 +1,8 @@
 # --------------------------------------------------------------------------------
+# Alacritty
+# --------------------------------------------------------------------------------
+live_config_reload: true
+# --------------------------------------------------------------------------------
 # Colors
 # --------------------------------------------------------------------------------
 env:
@@ -19,54 +23,48 @@ shell:
 # Colors
 # --------------------------------------------------------------------------------
 
-# Copyright (c) 2017-present Arctic Ice Studio <development@arcticicestudio.com>
-# Copyright (c) 2017-present Sven Greb <code@svengreb.de>
-
-# Project:    Nord Alacritty
-# Version:    0.1.0
-# Repository: https://github.com/arcticicestudio/nord-alacritty
-# License:    MIT
-# References:
-#   https://github.com/jwilm/alacritty
-
+# Nord theme
 colors:
-  primary:
-    background: '0x2E3440'
-    foreground: '0xD8DEE9'
-  cursor:
-    text: '0x2E3440'
-    cursor: '0xD8DEE9'
-  normal:
-    black: '0x3B4252'
-    red: '0xBF616A'
-    green: '0xA3BE8C'
-    yellow: '0xEBCB8B'
-    blue: '0x81A1C1'
-    magenta: '0xB48EAD'
-    cyan: '0x88C0D0'
-    white: '0xE5E9F0'
-  bright:
-    black: '0x4C566A'
-    red: '0xBF616A'
-    green: '0xA3BE8C'
-    yellow: '0xEBCB8B'
-    blue: '0x81A1C1'
-    magenta: '0xB48EAD'
-    cyan: '0x8FBCBB'
-    white: '0xECEFF4'
+   # Default colors
+   primary:
+     background: '0x2E3440'
+     foreground: '0xD8DEE9'
+
+   # Normal colors
+   normal:
+     black:   '0x3B4252'
+     red:     '0xBF616A'
+     green:   '0xA3BE8C'
+     yellow:  '0xEBCB8B'
+     blue:    '0x81A1C1'
+     magenta: '0xB48EAD'
+     cyan:    '0x88C0D0'
+     white:   '0xE5E9F0'
+
+   # Bright colors
+   bright:
+     black:   '0x4C566A'
+     red:     '0xBF616A'
+     green:   '0xA3BE8C'
+     yellow:  '0xEBCB8B'
+     blue:    '0x81A1C1'
+     magenta: '0xB48EAD'
+     cyan:    '0x8FBCBB'
+     white:   '0xECEFF4'
 
 # --------------------------------------------------------------------------------
 # Font
 # --------------------------------------------------------------------------------
 font:
+  size: 12
   normal:
-    family: "Roboto Mono"
+    family: "Source Code Pro"
     style: Regular
   bold:
-    family: "Roboto Mono"
+    family: "Source Code Pro"
     style: Bold
   italic:
-    family: "Roboto Mono"
+    family: "Source Code Pro"
     style: Medium Italic
 
 # --------------------------------------------------------------------------------
@@ -74,9 +72,9 @@ font:
 # --------------------------------------------------------------------------------
 # Window opacity as a floating point number from 0.0 to 1.0.
 # The value 0.0 is completely transparent and 1.0 is opaque.
-background_opacity: 0.96
+background_opacity: 0.98
 
-use_thin_strokes: true
+# use_thin_strokes: true
 
 # --------------------------------------------------------------------------------
 # Window
@@ -96,8 +94,8 @@ window:
   # Blank space added around the window in pixels. This padding is not scaled by
   # DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 5
-    y: 6
+    x: 2
+    y: 2
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: false

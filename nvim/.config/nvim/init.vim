@@ -8,6 +8,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'vimlab/split-term.vim'
 Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips'
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
@@ -36,7 +37,7 @@ let g:lightline = {
 syntax on
 colorscheme nord
 set number
-set guifont=Roboto\ Mono:h12
+set guifont=Source\ Code\ Pro:h12
 set cursorline
 set number
 set showcmd
@@ -110,7 +111,14 @@ set signcolumn=no
 let g:UltiSnipsEditSplit = "vertical" 
 
 
+" """""""""""""""""""""""""
+" Colors
+" """""""""""""""""""""""""
 " Macro to inspect keyword type under the cursor
 map <C-h> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 			\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>"
+" colortest
+function Colortest()
+    so $VIMRUNTIME/syntax/colortest.vim
+endfunction
