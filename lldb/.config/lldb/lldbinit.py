@@ -60,6 +60,15 @@ if __name__ == "__main__":
     print("Run only as script from lldb... Not as standalone program")
 try:
     import lldb
+    color(COLOR_SEPARATOR)
+    if is_i386() or is_arm():
+        output("---------------------------------------------------------------------------------")
+    elif is_x64():
+        output("-----------------------------------------------------------------------------------------------------------------------")
+    color_bold()
+    output("[regs]\n")
+    color_reset()
+    #print_registers()
 except:
     pass
 
@@ -81,12 +90,14 @@ except:
 #
 # User configurable options
 #
+CONFIG_DISPLAY_REGISTER_WINDOW = 0
+CONFIG_DISPLAY_CODE_WINDOW = 0
 CONFIG_ENABLE_COLOR = 1
-CONFIG_DISPLAY_DISASSEMBLY_BYTES = 1
-CONFIG_DISASSEMBLY_LINE_COUNT = 8
+CONFIG_DISPLAY_DISASSEMBLY_BYTES = 0
+CONFIG_DISASSEMBLY_LINE_COUNT = 0
 CONFIG_USE_CUSTOM_DISASSEMBLY_FORMAT = 1
 CONFIG_DISPLAY_STACK_WINDOW = 0
-CONFIG_DISPLAY_FLOW_WINDOW = 1
+CONFIG_DISPLAY_FLOW_WINDOW = 0
 CONFIG_ENABLE_REGISTER_SHORTCUTS = 1
 CONFIG_DISPLAY_DATA_WINDOW = 0
 # removes the offsets and modifies the module name position
@@ -176,10 +187,10 @@ def __lldb_init_module(debugger, internal_dict):
     if os.getenv('PATH').startswith('/Applications/Xcode'):
         return
     '''
-    If I'm running from $HOME where .lldbinit is located, seems like lldb will load 
+    If I'm running from $HOME where .lldbinit is located, seems like lldb will load
     .lldbinit 2 times, thus this dirty hack is here to prevent doulbe loading...
     if somebody knows better way, would be great to know :)
-    ''' 
+    '''
     var = lldb.debugger.GetInternalVariableValue("stop-disassembly-count", lldb.debugger.GetInstanceName())
     if var.IsValid():
         var = var.GetStringAtIndex(0)
@@ -475,7 +486,7 @@ Available settings:
         print("[-] error: unrecognized command.")
         print(help)
     return
-def contextcodesize(debugger, command, result, dict): 
+def contextcodesize(debugger, command, result, dict):
     '''Set the number of disassembly lines in code window. Use \'contextcodesize help\' for more information.'''
     help = """
 Configures the number of disassembly lines displayed in code window.
@@ -825,7 +836,7 @@ Note: expressions supported, do not use spaces between operators.
             print("[-] error: invalid input address value.")
             print("")
             print(help)
-            return        
+            return
     else:
         print("[-] error: please insert a INT3 patched address.")
         print("")
@@ -945,7 +956,7 @@ Note: expressions supported, do not use spaces between operators.
     if len(cmd) == 1:
         if cmd[0] == "help":
            print(help)
-           return        
+           return
         null_addr = evaluate(cmd[0])
         patch_size = 1
         if null_addr == None:
@@ -983,7 +994,7 @@ Note: expressions supported, do not use spaces between operators.
         current_patch_addr = current_patch_addr + 1
     return
 '''
-    Implements stepover instruction.    
+    Implements stepover instruction.
 '''
 def stepo(debugger, command, result, dict):
     '''Step over calls and some other instructions so we don't need to step into them. Use \'stepo help\' for more information.'''
@@ -1047,7 +1058,7 @@ def LoadBreakPointsRva(debugger, command, result, dict):
         #for x in range (0, nummods):
         #       mod = target.GetModuleAtIndex(x);
         #       #print(dir(mod));
-        #       print(target.GetModuleAtIndex(x));              
+        #       print(target.GetModuleAtIndex(x));
         #       for sec in mod.section_iter():
         #               addr = sec.GetLoadAddress(target);
         #               name = sec.GetName();
@@ -1076,10 +1087,10 @@ def LoadBreakPointsRva(debugger, command, result, dict):
         return
     while True:
         line = f.readline()
-        if not line: 
+        if not line:
             break
         line = line.rstrip()
-        if not line: 
+        if not line:
             break
         debugger.HandleCommand("breakpoint set -a " + hex(loadaddr + long(line, 16)))
     f.close()
@@ -1185,7 +1196,7 @@ Sets rax/eax to return value and returns immediately from current function where
         print("[-] error: please check required arguments.")
         print("")
         print(help)
-        return        
+        return
     # XXX: is there a way to verify if address is valid? or just let lldb error when setting the breakpoint
     address = evaluate(cmd[0])
     if address == None:
@@ -1338,7 +1349,7 @@ Note: expressions supported, do not use spaces between operators.
     elif len(cmd) == 1:
         if cmd[0] == "help":
            print(help)
-           return        
+           return
         dump_addr = evaluate(cmd[0])
         if dump_addr == None:
             print("[-] error: invalid input address value.")
@@ -1361,7 +1372,7 @@ Note: expressions supported, do not use spaces between operators.
         if err.Success() == True:
             break
         size = size - 1
-    membuff = membuff + "\x00" * (0x100-size) 
+    membuff = membuff + "\x00" * (0x100-size)
     color(BLUE)
     if get_pointer_size() == 4:
         output("[0x0000:0x%.08X]" % dump_addr)
@@ -1372,7 +1383,7 @@ Note: expressions supported, do not use spaces between operators.
     color_bold()
     output("[data]")
     color_reset()
-    output("\n")        
+    output("\n")
     #output(hexdump(dump_addr, membuff, " ", 16));
     index = 0
     while index < 0x100:
@@ -1383,24 +1394,24 @@ Note: expressions supported, do not use spaces between operators.
             szaddr = "0x%.016lX" % dump_addr
         fmtnice = "%.02X %.02X %.02X %.02X %.02X %.02X %.02X %.02X"
         fmtnice = fmtnice + " - " + fmtnice
-        output("\033[1m%s :\033[0m %.02X %.02X %.02X %.02X %.02X %.02X %.02X %.02X - %.02X %.02X %.02X %.02X %.02X %.02X %.02X %.02X \033[1m%s\033[0m" % 
-            (szaddr, 
-            data[0], 
-            data[1], 
-            data[2], 
-            data[3], 
-            data[4], 
-            data[5], 
-            data[6], 
-            data[7], 
-            data[8], 
-            data[9], 
-            data[10], 
-            data[11], 
-            data[12], 
-            data[13], 
-            data[14], 
-            data[15], 
+        output("\033[1m%s :\033[0m %.02X %.02X %.02X %.02X %.02X %.02X %.02X %.02X - %.02X %.02X %.02X %.02X %.02X %.02X %.02X %.02X \033[1m%s\033[0m" %
+            (szaddr,
+            data[0],
+            data[1],
+            data[2],
+            data[3],
+            data[4],
+            data[5],
+            data[6],
+            data[7],
+            data[8],
+            data[9],
+            data[10],
+            data[11],
+            data[12],
+            data[13],
+            data[14],
+            data[15],
             quotechars(membuff[index:index+0x10])));
         if index + 0x10 != 0x100:
             output("\n")
@@ -1473,7 +1484,7 @@ Note: expressions supported, do not use spaces between operators.
             szaddr = "0x%.08X" % dump_addr
         else:
             szaddr = "0x%.016lX" % dump_addr
-        output("\033[1m%s :\033[0m %.04X %.04X %.04X %.04X %.04X %.04X %.04X %.04X \033[1m%s\033[0m" % (szaddr, 
+        output("\033[1m%s :\033[0m %.04X %.04X %.04X %.04X %.04X %.04X %.04X %.04X \033[1m%s\033[0m" % (szaddr,
             data[0],
             data[1],
             data[2],
@@ -1524,7 +1535,7 @@ Note: expressions supported, do not use spaces between operators.
         return
     err = lldb.SBError()
     size = 0x100
-    while size != 0:    
+    while size != 0:
         membuff = get_process().ReadMemory(dump_addr, size, err)
         if err.Success() == False and size == 0:
             output(str(err))
@@ -1552,11 +1563,11 @@ Note: expressions supported, do not use spaces between operators.
             szaddr = "0x%.08X" % dump_addr
         else:  #is_x64():
             szaddr = "0x%.016lX" % dump_addr
-        output("\033[1m%s :\033[0m %.08X %.08X %.08X %.08X \033[1m%s\033[0m" % (szaddr, 
-                                            mem0, 
-                                            mem1, 
-                                            mem2, 
-                                            mem3, 
+        output("\033[1m%s :\033[0m %.08X %.08X %.08X %.08X \033[1m%s\033[0m" % (szaddr,
+                                            mem0,
+                                            mem1,
+                                            mem2,
+                                            mem3,
                                             quotechars(membuff[index:index+0x10])));
         if index + 0x10 != 0x100:
             output("\n")
@@ -1585,7 +1596,7 @@ Note: expressions supported, do not use spaces between operators.
     elif len(cmd) == 1:
         if cmd[0] == "help":
            print(help)
-           return        
+           return
         dump_addr = evaluate(cmd[0])
         if dump_addr == None:
             print("[-] error: invalid input address value.")
@@ -1623,7 +1634,7 @@ Note: expressions supported, do not use spaces between operators.
     color_bold()
     output("[data]")
     color_reset()
-    output("\n")   
+    output("\n")
     index = 0
     while index < 0x100:
         (mem0, mem1, mem2, mem3) = struct.unpack("QQQQ", membuff[index:index+0x20])
@@ -1663,7 +1674,7 @@ def quotechars( chars ):
     for x in chars:
         if ord(x) >= 0x20 and ord(x) <= 126:
             data += x
-        else:       
+        else:
             data += "."
     return data
 # XXX: help
@@ -1732,9 +1743,9 @@ def findmem(debugger, command, result, dict):
     output_data = subprocess.check_output(["/usr/bin/vmmap", "%d" % pid])
     lines = output_data.split("\n")
     #print(lines);
-    #this relies on output from /usr/bin/vmmap so code is dependant on that 
+    #this relies on output from /usr/bin/vmmap so code is dependant on that
     #only reason why it's used is for better description of regions, which is
-    #nice to have. If they change vmmap in the future, I'll use my version 
+    #nice to have. If they change vmmap in the future, I'll use my version
     #and that output is much easier to parse...
     newlines = []
     for x in lines:
@@ -1769,10 +1780,10 @@ def findmem(debugger, command, result, dict):
         off = 0
         base_displayed = 0
         while True:
-            if count == 0: 
+            if count == 0:
                 return
             idx = membuff.find(search_string)
-            if idx == -1: 
+            if idx == -1:
                 break
             if count != -1:
                 count = count - 1
@@ -1823,7 +1834,7 @@ Note: expressions supported, do not use spaces between operators.
         return
     if cmd[0] == "help":
         print(help)
-        return        
+        return
     dump_addr = evaluate(cmd[0])
     if dump_addr == None:
         print("[-] error: invalid address value.")
@@ -2299,7 +2310,7 @@ def dump_eflags(eflags):
     if (eflags >> 2) & 1:
         output("P ")
     else:
-        output("p ")        
+        output("p ")
     if eflags & 1:
         output("C")
     else:
@@ -2489,8 +2500,8 @@ def reg64():
     global old_rbp
     global old_rsi
     global old_rdi
-    global old_r8 
-    global old_r9 
+    global old_r8
+    global old_r9
     global old_r10
     global old_r11
     global old_r12
@@ -3075,7 +3086,7 @@ def regarm():
     output("\n")
 def print_registers():
     arch = get_arch()
-    if is_i386(): 
+    if is_i386():
         reg32()
     elif is_x64():
         reg64()
@@ -3185,7 +3196,7 @@ def get_inst_size(target_addr):
 #
 # Commands that use external utilities
 #
-def show_loadcmds(debugger, command, result, dict): 
+def show_loadcmds(debugger, command, result, dict):
     '''Show otool output of Mach-O load commands. Use \'show_loadcmds\' for more information.'''
     help = """
 Show otool output of Mach-O load commands.
@@ -3204,7 +3215,7 @@ Note: expressions supported, do not use spaces between operators.
             print("[-] error: invalid header address value.")
             print("")
             print(help)
-            return        
+            return
     else:
         print("[-] error: please insert a valid Mach-O header address.")
         print("")
@@ -3227,7 +3238,7 @@ Note: expressions supported, do not use spaces between operators.
     # close file - it will be automatically deleted
     f.close()
     return
-def show_header(debugger, command, result, dict): 
+def show_header(debugger, command, result, dict):
     '''Show otool output of Mach-O header. Use \'show_header\' for more information.'''
     help = """
 Show otool output of Mach-O header.
@@ -3246,7 +3257,7 @@ Note: expressions supported, do not use spaces between operators.
             print("[-] error: invalid header address value.")
             print("")
             print(help)
-            return        
+            return
     else:
         print("[-] error: please insert a valid Mach-O header address.")
         print("")
@@ -3408,7 +3419,7 @@ Requires Keystone and Python bindings from www.keystone-engine.org.
 # End Commands that use external utilities
 #
 # XXX: help
-def IphoneConnect(debugger, command, result, dict): 
+def IphoneConnect(debugger, command, result, dict):
     '''Connect to debugserver running on iPhone'''
     help = """ """
     global GlobalListOutput
@@ -3504,7 +3515,7 @@ def get_indirect_flow_target(source_address):
             if x == None:
                 return 0
             value = get_frame().EvaluateExpression("$" + x.group(1))
-            if value.IsValid() == False:                
+            if value.IsValid() == False:
                 return 0
             deref_addr = int(value.GetValue(), 10)
             if "rip" in operand:
@@ -3514,7 +3525,7 @@ def get_indirect_flow_target(source_address):
             if x == None:
                 return 0
             value = get_frame().EvaluateExpression("$" + x.group(1))
-            if value.IsValid() == False:                
+            if value.IsValid() == False:
                 return 0
             deref_addr = int(value.GetValue(), 10)
         # now we can dereference and find the call target
@@ -3526,7 +3537,7 @@ def get_indirect_flow_target(source_address):
             return call_target_addr
         if err.Success() == False:
             return 0
-        return 0        
+        return 0
     # calls into a register
     elif operand.startswith('r') or operand.startswith('e'):
         #output("register call\n")
@@ -3535,7 +3546,7 @@ def get_indirect_flow_target(source_address):
             return 0
         #output("Result {}\n".format(x.group(1)))
         value = get_frame().EvaluateExpression("$" + x.group(1))
-        if value.IsValid() == False:                
+        if value.IsValid() == False:
             return 0
         return int(value.GetValue(), 10)
     # RIP relative calls
@@ -3620,7 +3631,7 @@ def display_indirect_flow():
         output("\n")
     return
 #
-# The heart of lldbinit - when lldb stop this is where we land 
+# The heart of lldbinit - when lldb stop this is where we land
 #
 def HandleHookStopOnTarget(debugger, command, result, dict):
     '''Display current code context.'''
@@ -3639,7 +3650,7 @@ def HandleHookStopOnTarget(debugger, command, result, dict):
         if thread.IsValid() == False:
             return
     frame = get_frame()
-    if not frame: 
+    if not frame:
         return
     thread= frame.GetThread()
     while True:
@@ -3655,15 +3666,16 @@ def HandleHookStopOnTarget(debugger, command, result, dict):
         #this is for ARM probably in the future... when I will need it...
         print("[-] error: Unknown architecture : " + arch)
         return
-    color(COLOR_SEPARATOR)
-    if is_i386() or is_arm():
-        output("---------------------------------------------------------------------------------")
-    elif is_x64():
-        output("-----------------------------------------------------------------------------------------------------------------------")
-    color_bold()
-    output("[regs]\n")
-    color_reset()
-    print_registers()
+    if CONFIG_DISPLAY_REGISTER_WINDOW == 1:
+        color(COLOR_SEPARATOR)
+        if is_i386() or is_arm():
+            output("---------------------------------------------------------------------------------")
+        elif is_x64():
+            output("-----------------------------------------------------------------------------------------------------------------------")
+        color_bold()
+        output("[regs]\n")
+        color_reset()
+        print_registers()
     if CONFIG_DISPLAY_STACK_WINDOW == 1:
         color(COLOR_SEPARATOR)
         if is_i386() or is_arm():
@@ -3696,68 +3708,69 @@ def HandleHookStopOnTarget(debugger, command, result, dict):
         output("[flow]\n")
         color_reset()
         display_indirect_flow()
-    color(COLOR_SEPARATOR)
-    if is_i386() or is_arm():
-        output("---------------------------------------------------------------------------------")
-    elif is_x64():
-        output("-----------------------------------------------------------------------------------------------------------------------")
-    color_bold()
-    output("[code]\n")
-    color_reset()
-    if is_i386():
-        pc = get_register("eip")
-    elif is_x64():
-        pc = get_register("rip")
-    elif is_arm():
-        pc = get_register("pc")        
-    res = lldb.SBCommandReturnObject()
-    if is_arm():
-        cpsr = get_gp_register("cpsr")
-        t = (cpsr >> 5) & 1
-        if t:
-            #it's thumb
-            arm_type = "thumbv7-apple-ios"
+    if CONFIG_DISPLAY_CODE_WINDOW == 1:
+        color(COLOR_SEPARATOR)
+        if is_i386() or is_arm():
+            output("---------------------------------------------------------------------------------")
+        elif is_x64():
+            output("-----------------------------------------------------------------------------------------------------------------------")
+        color_bold()
+        output("[code]\n")
+        color_reset()
+        if is_i386():
+            pc = get_register("eip")
+        elif is_x64():
+            pc = get_register("rip")
+        elif is_arm():
+            pc = get_register("pc")
+        res = lldb.SBCommandReturnObject()
+        if is_arm():
+            cpsr = get_gp_register("cpsr")
+            t = (cpsr >> 5) & 1
+            if t:
+                #it's thumb
+                arm_type = "thumbv7-apple-ios"
+            else:
+                arm_type = "armv7-apple-ios"
+            lldb.debugger.GetCommandInterpreter().HandleCommand("disassemble -A " + arm_type + " --start-address=" + pc + " --count=8", res)
         else:
-            arm_type = "armv7-apple-ios"
-        lldb.debugger.GetCommandInterpreter().HandleCommand("disassemble -A " + arm_type + " --start-address=" + pc + " --count=8", res)
-    else:
-        if CONFIG_DISPLAY_DISASSEMBLY_BYTES == 1:
-            lldb.debugger.GetCommandInterpreter().HandleCommand("disassemble -b --start-address=" + pc + " --count=" + str(CONFIG_DISASSEMBLY_LINE_COUNT), res)
-        else:
-            lldb.debugger.GetCommandInterpreter().HandleCommand("disassemble --start-address=" + pc + " --count=" + str(CONFIG_DISASSEMBLY_LINE_COUNT), res)
-    data = res.GetOutput()
-    #split lines... and mark currently executed code...
-    data = data.split("\n")
-    #detemine what to hl, as sometimes lldb won't put => into stoped thread... well...
-    #need to check if first sym is => or '  ' which means this is name without symol
-    #symbols are stored 1st so here we go...
-    line_to_hl = 0
-    #if data[0][0:2] == "->":
-    #   line_to_hl = 0;
-    #if data[0][0:2] != '  ':
-    #   line_to_hl = 1;
-    #now we look when pc is held in disassembly and we color only that line 
-    pc_text = int(str(pc).strip().split()[0], 16)
-    pc_text = hex(pc_text)
-    #print(pc_text);
-    for idx,x in enumerate(data):
-        if pc_text in x:
-            line_to_hl = idx
-            break
-    for idx,x in enumerate(data):
-        if line_to_hl == idx: #x[0:2] == "->" and idx < 3:
-            color(COLOR_HIGHLIGHT_LINE)
-            color_bold()
-            output(x)
-            color_reset()
-            output("\n")
-        # don't add newline to last line to avoid empty line
-        elif len(data) > 0 and idx == len(data)-1:
-            output(x)
-        else:
-            output(x)
-            output("\n")
-    #output(res.GetOutput());
+            if CONFIG_DISPLAY_DISASSEMBLY_BYTES == 1:
+                lldb.debugger.GetCommandInterpreter().HandleCommand("disassemble -b --start-address=" + pc + " --count=" + str(CONFIG_DISASSEMBLY_LINE_COUNT), res)
+            else:
+                lldb.debugger.GetCommandInterpreter().HandleCommand("disassemble --start-address=" + pc + " --count=" + str(CONFIG_DISASSEMBLY_LINE_COUNT), res)
+        data = res.GetOutput()
+        #split lines... and mark currently executed code...
+        data = data.split("\n")
+        #detemine what to hl, as sometimes lldb won't put => into stoped thread... well...
+        #need to check if first sym is => or '  ' which means this is name without symol
+        #symbols are stored 1st so here we go...
+        line_to_hl = 0
+        #if data[0][0:2] == "->":
+        #   line_to_hl = 0;
+        #if data[0][0:2] != '  ':
+        #   line_to_hl = 1;
+        #now we look when pc is held in disassembly and we color only that line
+        pc_text = int(str(pc).strip().split()[0], 16)
+        pc_text = hex(pc_text)
+        #print(pc_text);
+        for idx,x in enumerate(data):
+            if pc_text in x:
+                line_to_hl = idx
+                break
+        for idx,x in enumerate(data):
+            if line_to_hl == idx: #x[0:2] == "->" and idx < 3:
+                color(COLOR_HIGHLIGHT_LINE)
+                color_bold()
+                output(x)
+                color_reset()
+                output("\n")
+            # don't add newline to last line to avoid empty line
+            elif len(data) > 0 and idx == len(data)-1:
+                output(x)
+            else:
+                output(x)
+                output("\n")
+        #output(res.GetOutput());
     color(COLOR_SEPARATOR)
     if get_pointer_size() == 4: #is_i386() or is_arm():
         output("---------------------------------------------------------------------------------------")
