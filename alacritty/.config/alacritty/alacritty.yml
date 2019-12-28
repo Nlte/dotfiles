@@ -58,14 +58,14 @@ colors:
 font:
   size: 12
   normal:
-    family: "Source Code Pro"
-    style: Regular
+    family: "Inconsolata Nerd Font"
+    style: Medium
   bold:
-    family: "Source Code Pro"
-    style: Bold
+    family: "Inconsolata Nerd Font"
+    style: Medium
   italic:
-    family: "Source Code Pro"
-    style: Medium Italic
+    family: "Inconsolata Nerd Font"
+    style: Medium
 
 # --------------------------------------------------------------------------------
 # Background
@@ -74,7 +74,7 @@ font:
 # The value 0.0 is completely transparent and 1.0 is opaque.
 background_opacity: 0.98
 
-# use_thin_strokes: true
+use_thin_strokes: true
 
 # --------------------------------------------------------------------------------
 # Window
@@ -108,3 +108,12 @@ window:
   # - transparent: title bar, transparent background and title bar buttons
   # - buttonless: title bar, transparent background, but no title bar buttons
   decorations: none
+
+
+# --------------------------------------------------------------------------------
+# Keybindings
+# --------------------------------------------------------------------------------
+
+key_bindings:
+  # necessary for <C-l> pane navigation in tmux without padding glitch
+  - { key: L,        mods: Control, chars: "\x0c"                            }
