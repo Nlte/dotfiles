@@ -9,6 +9,7 @@ Plug 'vimlab/split-term.vim'
 Plug 'Valloric/YouCompleteMe'
 Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
 
 call plug#end()
 
@@ -52,7 +53,12 @@ set fileformat=unix
 set splitright
 set splitbelow
 "set signcolumn=yes
-
+"
+" """""""""""""""""""""""""
+" leader key
+" """""""""""""""""""""""""
+" change the leader key from "\" to ","
+" let mapleader=","
 
 " """""""""""""""""""""""""
 " search
@@ -70,10 +76,10 @@ set wildmenu
 
 
 " """""""""""""""""""""""""
-" Term
+" Terminal
 " """""""""""""""""""""""""
+" Remove numbers
 au TermOpen * setlocal nonumber norelativenumber
-
 
 " """""""""""""""""""""""""
 " python
@@ -101,7 +107,7 @@ let g:ycm_max_num_identifier_candidates = 10
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '>>'
 " disable gutter
-set signcolumn=no
+"set signcolumn=no
 "let g:ycm_show_diagnostics_ui = 0
 
 
@@ -114,11 +120,21 @@ let g:UltiSnipsEditSplit = "vertical"
 " """""""""""""""""""""""""
 " Colors
 " """""""""""""""""""""""""
-" Macro to inspect keyword type under the cursor
-map <C-h> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-			\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>"
+" Function to inspect keyword type under the cursor
+function GetKeywordHighlight()
+    echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+    \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+    \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+endfunction
+command GetKeywordHighlight :call GetKeywordHighlight()
+
 " colortest
 function Colortest()
     so $VIMRUNTIME/syntax/colortest.vim
 endfunction
+command Colortest :call Colortest()
+
+
+" """""""""""""""""""""""""
+" Nvim-gdb
+" """""""""""""""""""""""""
