@@ -58,14 +58,14 @@ colors:
 font:
   size: 12
   normal:
-    family: "Inconsolata Nerd Font"
-    style: Medium
+    family: "DejaVuSansMono Nerd Font Mono"
+    style: Book
   bold:
-    family: "Inconsolata Nerd Font"
-    style: Medium
+    family: "DejaVuSansMono Nerd Font Mono"
+    style: Bold
   italic:
-    family: "Inconsolata Nerd Font"
-    style: Medium
+    family: "DejaVuSansMono Nerd Font Mono"
+    style: Oblique
 
 # --------------------------------------------------------------------------------
 # Background
