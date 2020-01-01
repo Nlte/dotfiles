@@ -7,3 +7,6 @@ end
 
 . ~/.config/fish/env.fish
 . ~/.config/fish/alias.fish
+
+# virtualfish
+eval (python -m virtualfish)
