@@ -11,7 +11,6 @@ Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
 Plug 'ludovicchabant/vim-gutentags'
-
 call plug#end()
 
 " nord theme overrides (must be called before colorscheme command)
@@ -141,6 +140,15 @@ command! Colortest :call FuncColortest()
 " """""""""""""""""""""""""
 
 " """""""""""""""""""""""""
-" Nvim-gdb
+" Tags 
 " """""""""""""""""""""""""
 set statusline+=%{gutentags#statusline()}
+
+" """""""""""""""""""""""""
+" Code folding
+" """""""""""""""""""""""""
+set foldmethod=indent   
+set foldnestmax=10
+set foldminlines=0
+set nofoldenable
+set foldlevel=2

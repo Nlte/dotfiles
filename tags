@@ -23,7 +23,7 @@ CONFIG_DISPLAY_DATA_WINDOW	lldb/.config/lldb/lldbinit.py	/^CONFIG_DISPLAY_DATA_W
 CONFIG_DISPLAY_DISASSEMBLY_BYTES	lldb/.config/lldb/lldbinit.py	/^CONFIG_DISPLAY_DISASSEMBLY_BYTES = 0$/;"	v
 CONFIG_DISPLAY_FLOW_WINDOW	lldb/.config/lldb/lldbinit.py	/^CONFIG_DISPLAY_FLOW_WINDOW = 0$/;"	v
 CONFIG_DISPLAY_REGISTER_WINDOW	lldb/.config/lldb/lldbinit.py	/^CONFIG_DISPLAY_REGISTER_WINDOW = 0$/;"	v
-CONFIG_DISPLAY_STACK_WINDOW	lldb/.config/lldb/lldbinit.py	/^CONFIG_DISPLAY_STACK_WINDOW = 0$/;"	v
+CONFIG_DISPLAY_STACK_WINDOW	lldb/.config/lldb/lldbinit.py	/^CONFIG_DISPLAY_STACK_WINDOW = 1$/;"	v
 CONFIG_ENABLE_COLOR	lldb/.config/lldb/lldbinit.py	/^CONFIG_ENABLE_COLOR = 1$/;"	v
 CONFIG_ENABLE_REGISTER_SHORTCUTS	lldb/.config/lldb/lldbinit.py	/^CONFIG_ENABLE_REGISTER_SHORTCUTS = 1$/;"	v
 CONFIG_KEYSTONE_AVAILABLE	lldb/.config/lldb/lldbinit.py	/^    CONFIG_KEYSTONE_AVAILABLE = 1$/;"	v
