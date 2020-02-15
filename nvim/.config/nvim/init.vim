@@ -34,7 +34,7 @@ let g:lightline = {
 
 " """""""""""""""""""""""""
 "  gui
-" """"""""""""""""""""""""""
+" """""""""""""""""""""""""
 syntax on
 colorscheme nord
 set number
@@ -52,13 +52,14 @@ set guicursor=
 set fileformat=unix
 set splitright
 set splitbelow
+set mouse=a
 "set signcolumn=yes
 "
 " """""""""""""""""""""""""
 " leader key
 " """""""""""""""""""""""""
 " change the leader key from "\" to ","
-" let mapleader=","
+let mapleader=","
 
 " """""""""""""""""""""""""
 " search
