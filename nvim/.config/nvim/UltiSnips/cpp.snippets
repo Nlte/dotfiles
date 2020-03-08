@@ -6,7 +6,6 @@ public:
 	virtual ~${1/(\w+).*/$1/}();
 
 private:
-	${0:/* data */}
 };
 endsnippet
 
@@ -17,7 +16,7 @@ snippet cguard "header guard" b
 #define $1_H_
 
 
-#endif // $1_H_
+#endif
 endsnippet
 
 
@@ -26,14 +25,6 @@ snippet gtest "googletest"
 TEST(${1:test}, ${2:name})
 {
 }
-endsnippet
-
-
-# Section delimiter comment
-snippet csection "section delimiter comment"
-/*
- * ${1:Section}
- */
 endsnippet
 
 
@@ -87,5 +78,5 @@ endsnippet
 snippet cnamespace "cpp namespace"
 namespace ${1:space} {
 
-} // namespace $1
+}
 endsnippet
