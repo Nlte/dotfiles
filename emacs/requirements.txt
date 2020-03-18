@@ -1,0 +1,4 @@
+git
+ripgrep
+coreutils
+fd
