@@ -1,3 +1,7 @@
+#!/bin/sh
+
+source $HOME/.dotfiles/utils.sh
+
 cd "$(dirname "$0")/.."
 DOTFILES_ROOT=$(pwd -P)
 
@@ -5,26 +9,17 @@ set -e
 
 echo ''
 
-info() {
-	# shellcheck disable=SC2059
-	printf "\r  [ \033[00;34m..\033[0m ] $1\n"
-}
 
-user() {
-	# shellcheck disable=SC2059
-	printf "\r  [ \033[0;33m??\033[0m ] $1\n"
-}
-
-success() {
-	# shellcheck disable=SC2059
-	printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
-}
-
-fail() {
-	# shellcheck disable=SC2059
-	printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
-	echo ''
-	exit
+check_requirements() {
+	info 'checking requirements'
+	declare -a arr=("git" "curl" "tar")
+	for cmd in "${arr[@]}"; do
+		command -v $cmd > /dev/null
+		if ! [ $? == 0 ]; then
+			fail "${cmd} not found"
+			exit 1
+		fi
+	done
 }
 
 setup_gitconfig() {
@@ -84,19 +79,20 @@ install_dotfiles() {
 }
 
 find_zsh() {
+	info "checking zsh"
 	if command -v zsh >/dev/null 2>&1 && grep "$(command -v zsh)" /etc/shells >/dev/null; then
 		command -v zsh
 	else
-		echo "/bin/zsh"
+		success "/bin/zsh"
 	fi
 }
 
+check_requirements || exit 1
 setup_gitconfig
 install_dotfiles
 
 info "installing dependencies"
 if ./bin/dotfile_update; then
-	./bin/dotfile_update
 	success "dependencies installed"
 else
 	fail "error installing dependencies"
