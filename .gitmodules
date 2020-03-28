@@ -1,0 +1,3 @@
+[submodule "prm/prm"]
+	path = prm/prm
+	url = https://github.com/EivindArvesen/prm.git

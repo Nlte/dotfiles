@@ -34,8 +34,8 @@ function install_emacs_plus() {
 function install_doom() {
 	if [ ! -d "$HOME/.emacs.d/" ]; then
 		info "installing doom emacs"
-		#git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
-		#~/.emacs.d/bin/doom install
+		git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+		~/.emacs.d/bin/doom install
 	else
 		success "doom emacs already installed"
 	fi

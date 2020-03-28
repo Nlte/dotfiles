@@ -47,3 +47,7 @@ link_dir() {
 	ln -s "$1" "$2"
 	success "linked $1 to $2"
 }
+
+current_dir_path() {
+	echo "$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+}

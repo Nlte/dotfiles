@@ -64,15 +64,6 @@ install_dotfiles() {
 		done
 }
 
-find_zsh() {
-	info "checking zsh"
-	if command -v zsh >/dev/null 2>&1 && grep "$(command -v zsh)" /etc/shells >/dev/null; then
-		command -v zsh
-	else
-		success "/bin/zsh"
-	fi
-}
-
 check_requirements || exit 1
 setup_gitconfig
 install_dotfiles
@@ -83,7 +74,3 @@ if ./bin/dotfile_update; then
 else
 	fail "error installing dependencies"
 fi
-
-zsh="$(find_zsh)"
-echo ''
-echo '  All installed!'

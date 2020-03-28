@@ -21,6 +21,10 @@
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "Source code pro" :size 12))
 
+;; set transparency (0: transparent, 100 = opaque)
+(set-frame-parameter (selected-frame) 'alpha '(96 96))
+(add-to-list 'default-frame-alist '(alpha 96 96))
+
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -51,7 +55,7 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
-
+;;
 ;; keyboard conf
 (when (eq system-type 'darwin) ;; mac specific settings
   ;;https://www.emacswiki.org/emacs/MetaKeyProblems
@@ -60,3 +64,12 @@
   (setq mac-option-modifier 'nil)
   (setq mac-command-modifier 'meta)
   )
+
+
+;; buffers
+(defun close-all-buffers ()
+(interactive)
+  (mapc 'kill-buffer (buffer-list)))
+
+
+;; treemacs
