@@ -7,3 +7,4 @@ nvim
 urlview
 fpp
 fzf
+abduco
