@@ -9,11 +9,16 @@ if ! [ $? == 0 ]; then
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 		https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-	mkdir -p ~/.config/nvim/
-	ln -sf "$DOTFILES/nvim/init.vim.symlink" ~/.config/nvim/init.vim
-	ln -sf "$DOTFILES/nvim/nord_additional_syntax.vim" ~/.config/nvim/
 	nvim +'PlugInstall --sync' +qa
 	nvim +'PlugUpdate' +qa
+    pip3 install --user pynvim
+    pip3 install --user neovim
 else
 	success "neovim already installed"
 fi
+
+mkdir -p ~/.config/nvim/
+link_file "$HOME/.dotfiles/nvim/init.vim" ~/.config/nvim/init.vim
+link_file "$HOME/.dotfiles/nvim/nord_additional_syntax.vim" ~/.config/nvim/nord_additional_syntax.vim
+mkdir -p ~/.config/nvim/UltiSnips
+link_dir "$HOME/.dotfiles/nvim/UltiSnips" ~/.config/nvim/UltiSnips/
