@@ -16,6 +16,9 @@
     Plug 'kassio/neoterm'
     Plug 'jreybert/vimagit'
     Plug 'dunstontc/projectile.nvim'
+    Plug 'jiangmiao/auto-pairs'
+    Plug 'octol/vim-cpp-enhanced-highlight'
+    Plug 'sheerun/vim-polyglot'
 
     call plug#end()
 
@@ -42,7 +45,8 @@
 
 " General
     set number
-    set guifont=Source\ Code\ Pro:h12
+    set encoding=UTF-8
+    set guifont="Source Code Pro:h12"
     set cursorline
     set number
     set showcmd
@@ -84,6 +88,12 @@
     set foldminlines=0
     set nofoldenable
     set foldlevel=2
+
+" Terminal
+    augroup TerminalStuff
+        au!
+        autocmd TermOpen * setlocal nonumber norelativenumber
+    augroup END
 
 
 " UltiSnips
