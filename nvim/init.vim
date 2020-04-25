@@ -142,14 +142,14 @@
     let test#strategy='neoterm'
 
 " vimux
-    map <Leader>q :VimuxCloseRunner<CR>
-    map <Leader>pt :call VimuxRunCommand("make test")<CR>
-
+    map <Leader>vq :VimuxCloseRunner<CR>
+    map <Leader>vt :call VimuxRunCommand("make test")<CR>
+    map <Leader>vls :call VimuxRunCommand("ls")<CR>
+    map <Leader>vz :VimuxZoomRunner<CR>
 
 " hooks
     augroup autocom
         autocmd!
         "executes cleanup on exit
-         autocmd VimLeavePre * call VimuxCloseRunner()
-
+        autocmd VimLeavePre * call VimuxCloseRunner()
     augroup END
