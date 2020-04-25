@@ -21,7 +21,7 @@
     Plug 'sheerun/vim-polyglot'
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
     Plug 'janko/vim-test'
-    Plug 'tpope/vim-dispatch'
+    Plug 'benmills/vimux'
 
     call plug#end()
 
@@ -140,3 +140,16 @@
 
 " vim-test
     let test#strategy='neoterm'
+
+" vimux
+    map <Leader>q :VimuxCloseRunner<CR>
+    map <Leader>pt :call VimuxRunCommand("make test")<CR>
+
+
+" hooks
+    augroup autocom
+        autocmd!
+        "executes cleanup on exit
+         autocmd VimLeavePre * call VimuxCloseRunner()
+
+    augroup END
