@@ -11,3 +11,4 @@ abduco
 ctags
 the_silver_searcher
 tree
+lazygit
