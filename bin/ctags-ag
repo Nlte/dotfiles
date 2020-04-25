@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ag -l | ctags --links=no -L-
