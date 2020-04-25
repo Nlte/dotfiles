@@ -1,6 +1,5 @@
 python3
 stow
-pip3
 fish
 tmux
 nvim
