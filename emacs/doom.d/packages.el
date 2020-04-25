@@ -52,3 +52,4 @@
 
 
 (package! flycheck :disable t)
+(package! elpy)

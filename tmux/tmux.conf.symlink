@@ -10,6 +10,9 @@ set-option -g prefix C-Space
 # escape time
 set -sg escape-time 0
 
+# colors
+set -g default-terminal "screen-256color"
+
 # split window with - !
 bind ! split-window -h -c "#{pane_current_path}"
 bind - split-window -v -c "#{pane_current_path}"

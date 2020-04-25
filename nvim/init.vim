@@ -19,6 +19,9 @@
     Plug 'jiangmiao/auto-pairs'
     Plug 'octol/vim-cpp-enhanced-highlight'
     Plug 'sheerun/vim-polyglot'
+    Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+    Plug 'janko/vim-test'
+    Plug 'tpope/vim-dispatch'
 
     call plug#end()
 
@@ -133,3 +136,7 @@
     endfunction
 
     autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
+
+" vim-test
+    let test#strategy='neoterm'
