@@ -144,8 +144,14 @@
 " vimux
     map <Leader>vq :VimuxCloseRunner<CR>
     map <Leader>vt :call VimuxRunCommand("make test")<CR>
+    map <Leader>vsand :call VimuxRunCommand("make sandbox")<CR>
+    map <Leader>vc :call VimuxRunCommand("make build")<CR>
     map <Leader>vls :call VimuxRunCommand("ls")<CR>
     map <Leader>vz :VimuxZoomRunner<CR>
+
+" NERDtree
+    map <Leader>op :NERDTreeToggle<CR>
+
 
 " hooks
     augroup autocom
