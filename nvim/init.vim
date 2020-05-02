@@ -20,8 +20,8 @@
     Plug 'octol/vim-cpp-enhanced-highlight'
     Plug 'sheerun/vim-polyglot'
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
-    Plug 'janko/vim-test'
     Plug 'benmills/vimux'
+    Plug 'SirVer/ultisnips'
 
     call plug#end()
 
@@ -125,7 +125,6 @@
     noremap <leader>fl :Lines<CR>
 
     let g:fzf_tags_command = 'ctags -R'
-    let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
     function! s:fzf_statusline()
       " Override statusline as you like
@@ -137,17 +136,31 @@
 
     autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
+    let g:fzf_colors =
+    \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
 
-" vim-test
-    let test#strategy='neoterm'
+    let g:fzf_layout = { 'down': '~30%' }
+
 
 " vimux
-    map <Leader>vq :VimuxCloseRunner<CR>
-    map <Leader>vt :call VimuxRunCommand("make test")<CR>
-    map <Leader>vsand :call VimuxRunCommand("make sandbox")<CR>
-    map <Leader>vc :call VimuxRunCommand("make build")<CR>
-    map <Leader>vls :call VimuxRunCommand("ls")<CR>
-    map <Leader>vz :VimuxZoomRunner<CR>
+    map <Leader>cq :VimuxCloseRunner<CR>
+    map <Leader>ct :call VimuxRunCommand("make test")<CR>
+    map <Leader>csd :call VimuxRunCommand("make sandbox")<CR>
+    map <Leader>cc :call VimuxRunCommand("make build")<CR>
+    map <Leader>cls :call VimuxRunCommand("ls")<CR>
+    map <Leader>cz :VimuxZoomRunner<CR>
 
 " NERDtree
     map <Leader>op :NERDTreeToggle<CR>
