@@ -19,7 +19,7 @@
     Plug 'jiangmiao/auto-pairs'
     Plug 'octol/vim-cpp-enhanced-highlight'
     Plug 'sheerun/vim-polyglot'
-    Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+    Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
     Plug 'benmills/vimux'
     Plug 'SirVer/ultisnips'
 
