@@ -3,8 +3,6 @@
     call plug#begin('~/.local/share/nvim/plugged')
 
     Plug 'arcticicestudio/nord-vim'
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'zchee/deoplete-clang'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'scrooloose/nerdtree'
@@ -22,6 +20,7 @@
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
     Plug 'benmills/vimux'
     Plug 'SirVer/ultisnips'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     call plug#end()
 
@@ -70,8 +69,7 @@
     set hlsearch
     set inccommand=nosplit
     let mapleader=" "
-
-
+    autocmd BufRead,BufNewFile * setlocal signcolumn=no
 " Theme
     " nord theme overrides (must be called before colorscheme command)
     let home = expand('~')
@@ -172,3 +170,6 @@
         "executes cleanup on exit
         autocmd VimLeavePre * call VimuxCloseRunner()
     augroup END
+
+" coc.vim
+    source $HOME/.config/nvim/coc.vim
