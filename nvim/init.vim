@@ -21,6 +21,7 @@
     Plug 'benmills/vimux'
     Plug 'SirVer/ultisnips'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'editorconfig/editorconfig-vim'
 
     call plug#end()
 
@@ -157,6 +158,7 @@
     map <Leader>ct :call VimuxRunCommand("make test")<CR>
     map <Leader>csd :call VimuxRunCommand("make sandbox")<CR>
     map <Leader>cc :call VimuxRunCommand("make build")<CR>
+    map <Leader>cr :call VimuxRunCommand("make run")<CR>
     map <Leader>cls :call VimuxRunCommand("ls")<CR>
     map <Leader>cz :VimuxZoomRunner<CR>
 
