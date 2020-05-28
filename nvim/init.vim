@@ -117,7 +117,7 @@
 
 " FzF
     noremap <leader>ff :GFiles<CR>
-    noremap <leader>fb :Buffers<CR>
+    noremap <leader><space> :Buffers<CR>
     noremap <leader>ft :Tags<CR>
     noremap <leader>fhf :History<CR>
     noremap <leader>fhc :History:<CR>
