@@ -1,0 +1,26 @@
+#!/bin/bash
+
+source $HOME/.dotfiles/utils.sh
+
+command -v virtualenv > /dev/null
+if ! [ $? == 0 ]; then
+    fail "${virtualenv} not found"
+    exit 1
+fi
+
+if [ -d "venv" ]; then
+    fail "venv directory already exists"
+    exit 1
+fi
+
+if [ -f "venv" ]; then
+    fail "file named venv exists in the current directory"
+    exit 1
+fi
+
+virtualenv -p python3 ./venv
+source ./venv/bin/activate
+pip install --upgrade pip
+pip install pynvim jedi pylint
+
+success "virtualenv created"
