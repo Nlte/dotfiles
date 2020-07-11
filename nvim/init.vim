@@ -117,6 +117,8 @@
 
 
 " FzF
+"
+    cabbrev W w
     noremap <leader>ff :GFiles<CR>
     noremap <leader><space> :Buffers<CR>
     noremap <leader>ft :Tags<CR>
